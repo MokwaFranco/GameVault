@@ -1,0 +1,90 @@
+.home a {
+    background-color: white;
+    color: var(--dark-gray);
+    font-size: 12.5px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 12px;
+    padding-inline: 25px;
+    border: 2px solid white;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.home a:hover {
+    background-color: var(--dark-gray);
+    color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+.detalle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+main h1 {
+    color: white;
+    margin: 0;
+}
+
+main p {
+    color: white;
+    margin: 0;
+}
+
+main .action {
+    display: flex;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+main .action form {
+    width: 100%;
+    padding: 10px;
+}
+
+main .action form .button_agregar {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+main .action form .button_agregar:hover {
+    background-color: white;
+    color: var(--dark-gray);
+}
+
+main .action form .button_eliminar {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-size: 20px;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+main .action form .button_eliminar:hover {
+    background-color: white;
+    color: var(--dark-gray);
+}

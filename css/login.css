@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=News+Cycle:wght@400;700&family=Space+Grotesk:wght@300..700&family=Stack+Sans+Headline:wght@200..700&display=swap');
+
+* {
+    font-family: "Space Grotesk", sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --dark-gray: rgb(11, 11, 11);
+    --background-gray: rgb(8, 8, 8);
+    --light-green: rgb(0, 255, 98);
+    --light-red: rgb(255, 137, 137);
+}
+
+body {
+    background-color: var(--background-gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo a {
+    color: var(--light-green);
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 20px;
+}
+
+form {
+    background-color: var(--dark-gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 20rem;
+    padding: 20px;
+    margin-block: 10rem;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+
+form .alerta {
+    color: var(--light-red);
+    font-size: 12.5px;
+}
+
+form .campo {
+    background-color: var(--background-gray);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    gap: 2.5px;
+}
+
+form .campo label {
+    color: white;
+    font-size: 10px;
+}
+
+form .campo input {
+    background-color: var(--dark-gray);
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px;
+    padding-inline: 20px;
+    outline: none;
+    border: 2px solid white;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+form .campo input::placeholder {
+    color: rgb(77, 77, 77);
+    font-size: 12.5px;
+    font-weight: bold;
+}
+
+form .campo input:focus {
+    background-color: white;
+    color: var(--dark-gray);
+    width: 100%;
+}
+
+form button {
+    background-color: white;
+    color: rgb(11, 11, 11);
+    font-weight: bold;
+    font-size: 15px;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+form button:hover {
+    background-color: var(--dark-gray);
+    color: white;
+}
