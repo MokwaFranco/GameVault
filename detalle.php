@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     } elseif ($_POST['action'] === 'eliminar') {
         $coleccion->eliminar($id_usuario, $id_videojuego);
     }
-    header("Location detalle.php?id={$id_videojuego}");
+    header("Location: detalle.php?id={$id_videojuego}");
     exit;
 }
 
@@ -43,7 +43,7 @@ if (!$videojuego) {
     exit;
 }
 
-$guardado =$coleccion->existe($id_usuario, $id_videojuego)
+$guardado =$coleccion->existe($id_usuario, $id_videojuego);
 
 ?>
 
@@ -81,7 +81,7 @@ $guardado =$coleccion->existe($id_usuario, $id_videojuego)
         
             <div class="action">
                 <?php if ($guardado): ?>
-                    <form action="detalle.php?id=<?php $id_videojuego; ?>" method="POST">
+                    <form action="detalle.php?id=<?php echo $id_videojuego; ?>" method="POST">
                         <button type="submit" class="button_eliminar">
                             <i class="bi bi-trash2-fill"></i>
                         </button>
