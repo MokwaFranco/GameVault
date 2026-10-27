@@ -66,4 +66,9 @@ header {
 .account a {
     color: white;
     font-size: 25px;
+    transition: all 0.2s ease;
+}
+
+.account a:hover {
+    color: var(--light-green);
 }

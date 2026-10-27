@@ -1,0 +1,91 @@
+:root {
+    --dark-gray: rgb(11, 11, 11);
+    --background-gray: rgb(10, 13, 15);
+    --light-green: rgb(0, 255, 98);
+    --light-red: rgb(255, 137, 137);
+}
+
+body {
+    background-color: var(--dark-gray);
+}
+
+/* Contenedor principal del formulario (similar al grid de videojuegos pero centrado) */
+.form-cont {
+    width: 25rem;
+    margin: 40px auto;
+    padding: 20px;
+    padding-bottom: 30px;
+    background-color: var(--background-gray);
+    border: 2px solid white;
+    border-radius: 5px;
+    color: white;
+}
+
+.form-cont h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Estilos de los campos del formulario */
+.form-videogame .field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.form-videogame .field input {
+    background-color: var(--background-gray);
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    padding-inline: 20px;
+    border: 2px solid white;
+    border-radius: 50px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-videogame .field input:focus {
+    background-color: white;
+    color: var(--background-gray);
+}
+
+/*
+.form-videogame .field input[type="date"] {
+    color: rgb(117, 117, 117);
+}
+*/
+
+.button-add {
+    background-color: white;
+    color: var(--background-gray);
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid white;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.button-add:hover {
+    background-color: var(--background-gray);
+    color: white;
+}
+
+/* Alertas de éxito o error */
+.alert-exito {
+    color: var(--light-green);
+    font-size: 12.5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    color: var(--light-red);
+    font-size: 12.5px;
+    text-align: center;
+    margin-bottom: 20px;
+}

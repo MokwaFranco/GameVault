@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . "/conexion.php";
-require_once __DIR__ . "/Usuario.php";
-require_once __DIR__ . "/Sesion.php";
+require_once __DIR__ . '/clases/conexion.php';
+require_once __DIR__ . '/clases/Usuario.php';
+require_once __DIR__ . '/clases/Sesion.php';
 
 Sesion::iniciar();
 
 if (Sesion::autenticado()) {
-    header('Location: home.php');
+    header('Location: biblioteca.php');
     exit;
 }
 
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($datos !== null) {
             Sesion::login($datos);
-            header('Location: home.php');
+            header('Location: biblioteca.php');
             exit;
         }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <form action="login.php" method="POST">
         <div class="logo">
-            <a href="login.php">GameVault</a>
+            <a href="login.php" title="GameVault">GameVault</a>
         </div>
 
         <?php if ($error !== ''): ?>
@@ -59,12 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="campo">
             <!-- <label for="nombre_usuario">Nombre de usuario</label> -->
-            <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre de usuario" required>
+            <input type="text" name="nombre_usuario" id="nombre_usuario" placeholder="Nombre de usuario">
         </div>
 
         <div class="campo">
             <!-- <label for="contrasena_usuario">Contraseña</label> -->
-            <input type="password" name="contrasena_usuario" id="contrasena_usuario" placeholder="Contraseña" required>
+            <input type="password" name="contrasena_usuario" id="contrasena_usuario" placeholder="Contraseña">
         </div>
 
         <button type="submit">Iniciar sesión</button>

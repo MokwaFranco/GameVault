@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require_once 'Conexion.php';
-require_once 'Sesion.php';
-require_once 'Coleccion.php';
+require_once __DIR__ . '/clases/conexion.php';
+require_once __DIR__ . '/clases/Sesion.php';
+require_once __DIR__ . '/clases/Coleccion.php';
 
 Sesion::proteger('login.php');
 
@@ -16,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_videojuego'])) {
     if ($id_usuario && $id_videojuego) {
         $pdo = conexion::obtener();
 
-        $coleccion = new coleccion($pdo);
+        $coleccion = new Coleccion($pdo);
         $coleccion->agregar($id_usuario, $id_videojuego);
     }
 }
 
-header('Location: mi_coleccion.php');
+header('Location: mi_biblioteca.php');
 exit;
 
 ?>
