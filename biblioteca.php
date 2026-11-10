@@ -15,16 +15,17 @@ $id_usuario = (int) ($usuario_actual['id_usuario'] ?? 0);
 $pdo = conexion::obtener();
 $coleccion = new Coleccion($pdo);
 
+# Guardar registro
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_videojuego'])) {
     $id_videojuego = filter_input(INPUT_POST, 'id_videojuego', FILTER_VALIDATE_INT);
     if ($id_videojuego) {
-        $coleccion->agregar($id_usuario, $id_videojuego);
+        $coleccion->agregarVideojuego($id_usuario, $id_videojuego);
         header('Location: biblioteca.php');
         exit;
     }
 }
 
-$sql = "SELECT id_videojuego, titulo_videojuego, descripcion_videojuego
+$sql = "SELECT id_videojuego, titulo_videojuego, descripcion_videojuego, imagen_videojuego
         FROM videojuego
         ORDER BY titulo_videojuego";
 
@@ -36,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
     $id_eliminar = filter_input(INPUT_POST, 'eliminar_id', FILTER_VALIDATE_INT);
     if ($id_eliminar) {
         $videojuegoObj = new Videojuego($pdo);
-        $videojuegoObj->eliminar($id_eliminar);
+        $videojuegoObj->eliminarVideojuego($id_eliminar);
         header('Location: biblioteca.php');
         exit;
     }
@@ -65,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
         </div>
 
         <div class="account">
+            <a href="agregar_editora.php" title="agregar editora nueva"><i class="bi bi-clipboard-plus"></i></a>
             <a href="agregar_registro.php" title="agregar nuevo registro"><i class="bi bi-patch-plus"></i></a>
             <!--<a href="#" title="Notificaciones"><i class="bi bi-bell"></i></a>-->
             <a href="mi_biblioteca.php" title="Mi biblioteca"><i class="bi bi-folder"></i></a>
@@ -78,13 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
                 <?php foreach ($videojuegos as $videojuego): ?>
                     <?php
                         $id_videojuego = (int) $videojuego['id_videojuego'];
-                        $guardado = $coleccion->existe($id_usuario, $id_videojuego);
-                        #$nombre_imagen = !empty($videojuego['imagen_videojuego']) ? $videojuego['imagen_videojuego'] : 'default.png';
+                        $guardado = $coleccion->existeVideojuego($id_usuario, $id_videojuego);
                     ?>
                     <div class="card">
                         <div>
-                            <!-- <a href="#"><img src="covers/<?php #echo htmlspecialchars($nombre_imagen); ?>" alt="<?php echo htmlspecialchars($videojuego['titulo_videojuego']) ?>"></a> -->
-                            <a href="detelle.php?id=<?php echo $videojuego['id_videojuego']; ?>">
+                            <a href="detalle.php?id=<?php echo $videojuego['id_videojuego']; ?>">
+                                <img src="<?php echo htmlspecialchars($videojuego['imagen_videojuego']); ?>" width="100%">
+                            
                                 <h3 title="<?php echo $videojuego['titulo_videojuego']; ?>">
                                     <?php echo htmlspecialchars($videojuego['titulo_videojuego']); ?>
                                 </h3>

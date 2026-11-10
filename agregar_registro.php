@@ -5,26 +5,29 @@ declare(strict_types=1);
 require_once __DIR__ . '/clases/conexion.php';
 require_once __DIR__ . '/clases/Sesion.php';
 require_once __DIR__ . '/clases/Videojuego.php';
+require_once __DIR__ . '/clases/Editora.php';
 
 Sesion::proteger('login.php');
 
 $pdo = conexion::obtener();
+
 $mensaje = "";
 $tipo_mensaje = "";
+
+$editoraObj = new Editora(($pdo));
+$editoras = $editoraObj->getEditoras();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo_videojuego'])) {
     $titulo = trim($_POST['titulo_videojuego']);
     $descripcion = trim($_POST['descripcion_videojuego'] ?? '');
-    #$imagen = trim($_POST['imagen_videojuego'] ?? '');
-    #$fecha_lanzamiento = trim($_POST['fecha_lanzamiento_videojuego'] ?? '');
+    $imagen = trim($_POST['imagen_videojuego']);
     $desarrolladora = trim($_POST['desarrolladora_videojuego'] ?? '');
-    $editora = trim($_POST['editora_videojuego'] ?? '');
+    $id_editora = filter_input(INPUT_POST, 'id_editora', FILTER_VALIDATE_INT);
     
-    
-    if ($titulo !== "") {
+    if ($titulo !== '' && $imagen !== '') {
         $videojuegoObj = new Videojuego($pdo);
-
-        if ($videojuegoObj->crear($titulo, $descripcion, $desarrolladora, $editora)) {
+        
+        if ($videojuegoObj->crearVideojuego($titulo, $descripcion, $imagen, $desarrolladora, $id_editora ? $id_editora : null)) {
             $mensaje = "¡Registro agregado exitosamente!";
             $tipo_mensaje = "exito";
         } else {
@@ -60,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo_videojuego']))
         </div>
 
         <div class="account">
+            <a href="agregar_editora.php" title="agregar editora nueva"><i class="bi bi-clipboard-plus"></i></a>
             <a href="agregar_registro.php" title="Agregar registro"><i class="bi bi-patch-plus-fill"></i></a>
             <!--<a href="#" title="Notificaciones"><i class="bi bi-bell"></i></a>-->
             <a href="mi_biblioteca.php" title="Mi biblioteca"><i class="bi bi-folder"></i></a>
@@ -69,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo_videojuego']))
 
     <main>
         <section class="form-cont">
-            <h1>Agregar VideoJuego</h1>
+            <h1>Agregar videojuego</h1>
 
             <?php if (!empty($mensaje)): ?>
                 <div class="alert-<?php echo $tipo_mensaje ?>">
@@ -86,22 +90,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['titulo_videojuego']))
                     <input type="text" name="descripcion_videojuego" id="descripcion_videojuego" placeholder="Descripción">
                 </div>
 
-                <!--
                 <div class="field">
-                    <input type="text" name="imagen_videojuego" id="imagen_videojuego" accept="image/png, image/jpeg, image/webp" placeholder="Imagen URL (png, jpeg, webp)">
+                    <input type="text" name="imagen_videojuego" id="imagen_videojuego" placeholder="URL imagen (png, jpeg, webp)">
                 </div>
-
-                <div class="field">
-                    <input type="date" name="fecha_lanzamiento_videojuego" id="fecha_lanzamiento_videojuego">
-                </div>
-                -->
 
                 <div class="field">
                     <input type="text" name="desarrolladora_videojuego" id="desarrolladora_videojuego" placeholder="Desarrolladora">
                 </div>
 
                 <div class="field">
-                    <input type="text" name="editora_videojuego" id="editora_videojuego" placeholder="Editora">
+                    <select name="id_editora" id="id_editora">
+                        <option value="">Seleccioná una editora...</option>
+                        <?php foreach ($editoras as $editora): ?>
+                            <option value="<?php echo $editora['id_editora']; ?>">
+                                <?php echo htmlspecialchars($editora['nombre_editora']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <button type="submit" class="button-add">Guardar cambios</button>

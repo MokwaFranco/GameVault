@@ -8,13 +8,11 @@ final class Coleccion
 
     public function obtenerVideojuegos(int $id_usuario): array
     {
-        $sql = "
-            SELECT v.id_videojuego, v.titulo_videojuego, c.fecha_agregado_coleccion
-            FROM coleccion c
-            INNER JOIN videojuego v ON c.id_videojuego = v.id_videojuego
-            WHERE c.id_usuario = :id_usuario
-            ORDER BY c.fecha_agregado_coleccion DESC
-        ";
+        $sql = "SELECT v.id_videojuego, v.titulo_videojuego, v.imagen_videojuego, c.fecha_agregado_coleccion
+                FROM coleccion c
+                INNER JOIN videojuego v ON c.id_videojuego = v.id_videojuego
+                WHERE c.id_usuario = :id_usuario
+                ORDER BY c.fecha_agregado_coleccion DESC";
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id_usuario' => $id_usuario]);
@@ -22,16 +20,14 @@ final class Coleccion
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function agregar(int $id_usuario, int $id_videojuego): bool
+    public function agregarVideojuego(int $id_usuario, int $id_videojuego): bool
     {
-        if ($this->existe($id_usuario, $id_videojuego)) {
+        if ($this->existeVideojuego($id_usuario, $id_videojuego)) {
             return false;
         }
 
-        $sql = "
-            INSERT INTO coleccion (id_usuario, id_videojuego, fecha_agregado_coleccion)
-            VALUES (:id_usuario, :id_videojuego, NOW());
-        ";
+        $sql = "INSERT INTO coleccion (id_usuario, id_videojuego, fecha_agregado_coleccion)
+                VALUES (:id_usuario, :id_videojuego, NOW());";
 
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
@@ -40,7 +36,7 @@ final class Coleccion
         ]);
     }
 
-    public function eliminar(int $id_usuario, int $id_videojuego): bool
+    public function eliminarVideojuego(int $id_usuario, int $id_videojuego): bool
     {
         $sql = "DELETE FROM coleccion
                 WHERE id_usuario = :id_usuario
@@ -53,7 +49,7 @@ final class Coleccion
         ]);
     }
 
-    public function existe(int $id_usuario, int $id_videojuego): bool
+    public function existeVideojuego(int $id_usuario, int $id_videojuego): bool
     {
         $sql = "SELECT COUNT(*)
                 FROM coleccion

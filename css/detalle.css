@@ -51,13 +51,18 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
-.detail-description p {
-    background-color: white;
-    padding: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    margin: 0;
-    white-space: pre-wrap; /* Mantiene saltos de línea ordenados */
+.detail-image {
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid white;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-inline: 25px;
+}
+
+.detail-image img {
+    width: 100%;
+    border: 2px solid white;
 }

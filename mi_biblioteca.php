@@ -17,7 +17,7 @@ $coleccion = new Coleccion($pdo);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quitar_id'])) {
     $id_quitar = filter_input(INPUT_POST, 'quitar_id', FILTER_VALIDATE_INT);
     if ($id_quitar) {
-        $coleccion->eliminar($id_usuario, $id_quitar);
+        $coleccion->eliminarVideojuego($id_usuario, $id_quitar);
         header('Location: mi_biblioteca.php');
         exit;
     }
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
     $id_eliminar = filter_input(INPUT_POST, 'eliminar_id', FILTER_VALIDATE_INT);
     if ($id_eliminar) {
         $videojuegoObj = new Videojuego($pdo);
-        $videojuegoObj->eliminar($id_eliminar);
+        $videojuegoObj->eliminarVideojuego($id_eliminar);
         header('Location: biblioteca.php');
         exit;
     }
@@ -58,6 +58,7 @@ $mis_videojuegos = $coleccion->obtenerVideojuegos($id_usuario);
         </div>
 
         <div class="account">
+            <a href="agregar_editora.php" title="agregar editora nueva"><i class="bi bi-clipboard-plus"></i></a>
             <a href="agregar_registro.php" title="Agregar registro"><i class="bi bi-patch-plus"></i></a>
             <!--<a href="#" title="Notificaciones"><i class="bi bi-bell"></i></a>-->
             <a href="mi_biblioteca.php" title="Mi biblioteca"><i class="bi bi-folder-fill"></i></a>
@@ -76,7 +77,7 @@ $mis_videojuegos = $coleccion->obtenerVideojuegos($id_usuario);
                     <div class="my-card">
                         <div>
                             <!-- <a href="#"><img src="covers/<?php #echo htmlspecialchars($nombre_imagen); ?>" alt="<?php #echo htmlspecialchars($mi_videojuego['titulo_videojuego']) ?>"></a> -->
-                            <a href="detelle.php?id=<?php echo $mi_videojuego['id_videojuego']; ?>">
+                            <a href="detalle.php?id=<?php echo $mi_videojuego['id_videojuego']; ?>">
                                 <h3 title="<?php echo $mi_videojuego['titulo_videojuego'] ?>"><?php echo htmlspecialchars($mi_videojuego['titulo_videojuego']); ?></h3>
                             </a>
                             <!-- <p><?php #echo htmlspecialchars(substr($videojuego['descripcion_videojuego'] ?? '', 0, 80)) . '...' ?></p> -->

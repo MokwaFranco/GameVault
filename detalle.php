@@ -46,6 +46,7 @@ if (!$videojuego) {
         </div>
 
         <div class="account">
+            <a href="agregar_editora.php" title="agregar editora nueva"><i class="bi bi-clipboard-plus"></i></a>
             <a href="agregar_registro.php" title="Agregar nuevo registro"><i class="bi bi-patch-plus"></i></a>
             <a href="mi_biblioteca.php" title="Mi Biblioteca"><i class="bi bi-folder"></i></a>
         </div>
@@ -56,14 +57,18 @@ if (!$videojuego) {
             <h1><?php echo htmlspecialchars($videojuego['titulo_videojuego']); ?></h1>
 
             <div class="detail-info">
+                <div class="detail-image">
+                    <img src="<?php echo htmlspecialchars($videojuego["imagen_videojuego"]) ?>">
+                </div>
+
                 <div class="detail-item">
                     <strong>Desarrolladora:</strong> 
                     <span><?php echo htmlspecialchars($videojuego['desarrolladora_videojuego'] ?? 'Sin especificar'); ?></span>
                 </div>
 
                 <div class="detail-item">
-                    <strong>Editora:</strong> 
-                    <span><?php echo htmlspecialchars($videojuego['editora_videojuego'] ?? 'Sin especificar'); ?></span>
+                    <strong>Editora:</strong>
+                    <span><?php echo htmlspecialchars($videojuego['nombre_editora'] ?? 'Sin especificar'); ?></span>
                 </div>
 
                 <div class="detail-item">

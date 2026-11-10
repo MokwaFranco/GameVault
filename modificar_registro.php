@@ -5,11 +5,18 @@ declare(strict_types=1);
 require_once __DIR__ . '/clases/conexion.php';
 require_once __DIR__ . '/clases/Sesion.php';
 require_once __DIR__ . '/clases/Videojuego.php';
+require_once __DIR__ . '/clases/Editora.php';
 
 Sesion::proteger('login.php');
 
 $pdo = conexion::obtener();
+
+$mensaje = '';
+$tipo_mensaje = '';
+
 $videojuegoObj = new Videojuego($pdo);
+$editoraObj = new Editora($pdo);
+$editoras = $editoraObj->getEditoras();
 
 $id_videojuego = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id_videojuego) {
@@ -23,17 +30,15 @@ if (!$videojuego) {
     exit;
 }
 
-$mensaje = '';
-$tipo_mensaje = '';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo = trim($_POST['titulo_videojuego']);
     $descripcion = trim($_POST['descripcion_videojuego']);
+    $imagen = trim($_POST['imagen_videojuego']);
     $desarrolladora = trim($_POST['desarrolladora_videojuego']);
-    $editora = trim($_POST['editora_videojuego']);
+    $id_editora = filter_input(INPUT_POST, 'id_editora', FILTER_VALIDATE_INT);
 
-    if ($titulo !== "") {
-        if ($videojuegoObj->actualizar($id_videojuego, $titulo, $descripcion, $desarrolladora, $editora)) {
+    if ($titulo !== '' && $imagen !== '') {
+        if ($videojuegoObj->actualizarVideojuego($id_videojuego, $titulo, $descripcion, $imagen, $desarrolladora, $id_editora ? $id_editora : null)) {
             $mensaje = "¡Registro modificado correctamente!";
             $tipo_mensaje = "exito";
             $videojuego = $videojuegoObj->obtenerPorId($id_videojuego);
@@ -70,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="account">
+            <a href="agregar_editora.php" title="agregar editora nueva"><i class="bi bi-clipboard-plus"></i></a>
             <a href="agregar_registro.php" title="Agregar videojuego"><i class="bi bi-patch-plus"></i></a>
             <a href="mi_biblioteca.php" title="Mi biblioteca"><i class="bi bi-folder"></i></a>
         </div>
@@ -77,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main>
         <section class="form-cont">
-            <h1>Modificar VideoJuego</h1>
+            <h1>Modificar videojuego</h1>
 
             <?php if (!empty($mensaje)): ?>
                 <div class="alert-<?php echo $tipo_mensaje ?>">
@@ -93,23 +99,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="field">
                     <input type="text" name="descripcion_videojuego" id="descripcion_videojuego" value="<?php echo htmlspecialchars($videojuego['descripcion_videojuego'] ?? ''); ?>" placeholder="Descripción">
                 </div>
-
-                <!--
+                
                 <div class="field">
-                    <input type="text" name="imagen_videojuego" id="imagen_videojuego" accept="image/png, image/jpeg, image/webp" placeholder="Imagen URL (png, jpeg, webp)">
+                    <input type="text" name="imagen_videojuego" id="imagen_videojuego" value="<?php echo htmlspecialchars($videojuego['imagen_videojuego'] ?? ''); ?>" placeholder="URL imagen (png, jpeg, webp)">
                 </div>
-
-                <div class="field">
-                    <input type="date" name="fecha_lanzamiento_videojuego" id="fecha_lanzamiento_videojuego">
-                </div>
-                -->
 
                 <div class="field">
                     <input type="text" name="desarrolladora_videojuego" id="desarrolladora_videojuego" value="<?php echo htmlspecialchars($videojuego['desarrolladora_videojuego'] ?? ''); ?>" placeholder="Desarrolladora">
                 </div>
 
                 <div class="field">
-                    <input type="text" name="editora_videojuego" id="editora_videojuego" value="<?php echo htmlspecialchars($videojuego['editora_videojuego'] ?? ''); ?>" placeholder="Editora">
+                    <select name="id_editora" id="id_editora">
+                        <option value="">Seleccioná una editora...</option>
+                        <?php foreach ($editoras as $editora): ?>
+                            <option value="<?php echo $editora['id_editora']; ?>">
+                                <?php echo htmlspecialchars($editora['nombre_editora']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
 
                 <button type="submit" class="button-add">Guardar cambios</button>

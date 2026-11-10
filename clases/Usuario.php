@@ -15,9 +15,11 @@ final class Usuario
         
         $consulta = $this->pdo->prepare($sql);
         $consulta->execute([':nombre_usuario' => $nombre_usuario]);
+        # devuelve una unica fila
         $usuario = $consulta->fetch();
 
         if ($usuario && password_verify($contrasena_usuario, $usuario['contrasena_usuario'])) {
+            # elimina el hash
             unset($usuario['contrasena_usuario']);
             return $usuario;
         }
